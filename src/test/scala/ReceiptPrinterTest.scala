@@ -43,7 +43,14 @@ class ReceiptPrinterSpec extends AnyWordSpec with MockFactory with Matchers {
         )
         printer.receipt should include ("123 Lakeside Way")
       }
-      // add more tests here.
+
+      "contains the phone number of the cafe" in {
+        val printer = new ReceiptPrinter(
+          coffeeConnectionCafe,
+          Map("Cafe Latte" -> 1)
+        )
+        printer.receipt should include ("16503600708")
+      }
     }
   }
 }
