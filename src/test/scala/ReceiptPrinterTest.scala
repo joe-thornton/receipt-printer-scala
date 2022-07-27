@@ -1,8 +1,8 @@
-// src/test/scala/ReceiptPrinterTest.scala
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
+import org.scalamock.scalatest.MockFactory
 
-class ReceiptPrinterSpec extends AnyWordSpec with Matchers {
+class ReceiptPrinterSpec extends AnyWordSpec with MockFactory with Matchers {
   val coffeeConnectionCafe = new CafeDetails(
     "The Coffee Connection",
     "123 Lakeside Way",

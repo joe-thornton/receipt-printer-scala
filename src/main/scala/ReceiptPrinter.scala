@@ -1,4 +1,3 @@
-// src/main/scala/ReceiptPrinter.scala
 class CafeDetails (
                     val shopName: String,
                     val address: String,
