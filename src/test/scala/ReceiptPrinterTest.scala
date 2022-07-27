@@ -1,6 +1,7 @@
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalamock.scalatest.MockFactory
+import com.github.nscala_time.time.Imports._
 
 class ReceiptPrinterSpec extends AnyWordSpec with MockFactory with Matchers {
   val coffeeConnectionCafe = new CafeDetails(
@@ -51,6 +52,17 @@ class ReceiptPrinterSpec extends AnyWordSpec with MockFactory with Matchers {
         )
         printer.receipt should include ("16503600708")
       }
+
+      "contains the date of the transaction" in {
+        val dt = new LocalDateTime("2022-07-27T11:39:45.618")
+        val printer = new ReceiptPrinter(
+          coffeeConnectionCafe,
+          Map("Cafe Latte" -> 1),
+          dt
+        )
+        printer.receipt should include ("27/07/22 11:39")
+      }
+
     }
   }
 }

@@ -1,3 +1,5 @@
+import com.github.nscala_time.time.Imports._
+
 class CafeDetails (
                     val shopName: String,
                     val address: String,
@@ -5,7 +7,7 @@ class CafeDetails (
                     val prices: Map[String, Double]
                   )
 
-class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map()) {
+class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map(), val dateAndTime: LocalDateTime = LocalDateTime.now()) {
 
   /**
    * This method should return a multiline string
@@ -19,10 +21,18 @@ class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map())
    * - the VAT (20% of total price)
    */
   def receipt: String = {
-    s"""${cafeDetails}"""
+    s"""$printCafeDetails
+       |$printDateAndTime
+       |""".stripMargin
   }
 
-  private[this] def cafeDetails: String = {
-    s"""${cafe.shopName} | ${cafe.address} | ${cafe.phone}"""
+  private[this] def printDateAndTime: String = {
+    val dateTimeString = dateAndTime.toString("dd/MM/yy hh:mm")
+    s"Transaction at: $dateTimeString"
   }
+
+  private[this] def printCafeDetails: String = {
+    s"${cafe.shopName} | ${cafe.address} | ${cafe.phone}"
+  }
+
 }
