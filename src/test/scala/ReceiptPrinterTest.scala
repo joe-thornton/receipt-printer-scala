@@ -34,7 +34,7 @@ class ReceiptPrinterSpec extends AnyWordSpec with MockFactory with Matchers {
           coffeeConnectionCafe,
           Map("Cafe Latte" -> 1)
         )
-        printer.receipt should include ("The Coffee Connection")
+        printer.receipt() should include ("The Coffee Connection")
       }
 
       "contains the address of the cafe" in {
@@ -42,7 +42,7 @@ class ReceiptPrinterSpec extends AnyWordSpec with MockFactory with Matchers {
           coffeeConnectionCafe,
           Map("Cafe Latte" -> 1)
         )
-        printer.receipt should include ("123 Lakeside Way")
+        printer.receipt() should include ("123 Lakeside Way")
       }
 
       "contains the phone number of the cafe" in {
@@ -50,18 +50,25 @@ class ReceiptPrinterSpec extends AnyWordSpec with MockFactory with Matchers {
           coffeeConnectionCafe,
           Map("Cafe Latte" -> 1)
         )
-        printer.receipt should include ("16503600708")
+        printer.receipt() should include ("16503600708")
       }
 
       "contains the date of the transaction" in {
         val dt = new LocalDateTime("2022-07-27T11:39:45.618")
         val printer = new ReceiptPrinter(
           coffeeConnectionCafe,
-          Map("Cafe Latte" -> 1),
-          dt
+          Map("Cafe Latte" -> 1)
         )
-        printer.receipt should include ("27/07/22 11:39")
+        printer.receipt(dt) should include ("27/07/22 11:39")
       }
+
+/*      "can print the quantity and price of a single order item" in {
+        val printer = new ReceiptPrinter(
+          coffeeConnectionCafe,
+          Map("Cafe Latte" -> 1)
+        )
+        printer.receipt should include ("1 x Cafe Latte | 4.75)
+      }*/
 
     }
   }

@@ -7,7 +7,7 @@ class CafeDetails (
                     val prices: Map[String, Double]
                   )
 
-class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map(), val dateAndTime: LocalDateTime = LocalDateTime.now()) {
+class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map()) {
 
   /**
    * This method should return a multiline string
@@ -20,13 +20,13 @@ class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map(),
    * - the total price
    * - the VAT (20% of total price)
    */
-  def receipt: String = {
+  def receipt(dateAndTime: LocalDateTime = LocalDateTime.now()): String = {
     s"""$printCafeDetails
-       |$printDateAndTime
+       |${printDateAndTime(dateAndTime: LocalDateTime)}
        |""".stripMargin
   }
 
-  private[this] def printDateAndTime: String = {
+  private[this] def printDateAndTime(dateAndTime: LocalDateTime): String = {
     val dateTimeString = dateAndTime.toString("dd/MM/yy hh:mm")
     s"Transaction at: $dateTimeString"
   }
