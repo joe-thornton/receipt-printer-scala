@@ -30,8 +30,9 @@ class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map())
        |""".stripMargin
   }
 
-  private[this] def printItem(item: (String, Int, Double)): String = {
-    f"${item._2}%-2sx ${item._1}%-14s ${item._3}%.2f"
+  private[this] def printItem(orderLine: (String, Int, Double)): String = {
+    val (item, quantity, cost) = orderLine
+    f"${quantity}%-2sx ${item}%-14s ${cost}%.2f"
   }
 
   private[this] def mapItemToCost(item: (String, Int)): (String, Int, Double) = {
