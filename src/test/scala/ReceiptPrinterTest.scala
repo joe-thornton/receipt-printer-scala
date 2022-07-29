@@ -67,7 +67,7 @@ class ReceiptPrinterSpec extends AnyWordSpec with MockFactory with Matchers {
           coffeeConnectionCafe,
           Map("Cafe Latte" -> 1)
         )
-        printer.receipt() should include ("1 x Cafe Latte | 4.75")
+        printer.receipt() should include ("1 x Cafe Latte     4.75")
       }
 
       "can print the quantity and price of a multiple item order" in {
@@ -75,7 +75,7 @@ class ReceiptPrinterSpec extends AnyWordSpec with MockFactory with Matchers {
           coffeeConnectionCafe,
           Map("Cafe Latte" -> 1, "Tea" -> 2)
         )
-        printer.receipt() should include ("2 x Tea | 7.30")
+        printer.receipt() should include ("1 x Cafe Latte     4.75\n2 x Tea            7.30")
       }
 
     }
