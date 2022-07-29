@@ -20,10 +20,27 @@ class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map())
    * - the total price
    * - the VAT (20% of total price)
    */
+  val orderList: List[(String, Int)] = order.toList
+  val ordersWithItemQuantityCost: List[(String, Int, Double)] = orderList.map(mapItemToCost)
+
   def receipt(dateAndTime: LocalDateTime = LocalDateTime.now()): String = {
     s"""$printCafeDetails
        |${printDateAndTime(dateAndTime: LocalDateTime)}
+       |${ordersWithItemQuantityCost.map(printItem).mkString("\n")}
        |""".stripMargin
+  }
+
+  private[this] def printItem(item: (String, Int, Double)): String = {
+    f"${item._2} x ${item._1} | ${item._3}"
+  }
+
+  private[this] def mapItemToCost(item: (String, Int)): (String, Int, Double) = {
+    val (name, quantity) = item
+
+    cafe.prices.get(name) match {
+      case Some(pricePerUnit) => (name, quantity, pricePerUnit * quantity)
+      case None => throw new IllegalArgumentException("Cafe does not stock that item")
+    }
   }
 
   private[this] def printDateAndTime(dateAndTime: LocalDateTime): String = {
