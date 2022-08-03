@@ -23,7 +23,7 @@ class ReceiptPrinter(val cafe: CafeDetails, var order: Map[String, Int] = Map())
   val orderList: List[(String, Int)] = order.toList
   val ordersWithItemQuantityCost: List[(String, Int, Double)] = orderList.map(mapItemToCost)
   val total: Double = ordersWithItemQuantityCost.foldLeft(0.0) { (total, item) => total + item._3 }
-  val VAT: Double = 0.2 * ordersWithItemQuantityCost.foldLeft(0.0) { (total, item) => total + item._3 }
+  val VAT: Double = 0.2 * total
 
   def receipt(dateAndTime: LocalDateTime = LocalDateTime.now()): String = {
     s"""$printCafeDetails
